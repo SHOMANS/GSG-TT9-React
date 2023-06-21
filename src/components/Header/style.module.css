@@ -1,0 +1,17 @@
+.header {
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  height: 60px;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.header h1 {
+  color: #333;
+  display: inline-block;
+  font-size: 24px;
+  font-weight: 300;
+  margin: 0;
+  padding: 10px 0;
+  vertical-align: top;
+}

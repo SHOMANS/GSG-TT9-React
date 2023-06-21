@@ -1,5 +1,11 @@
-function App() {
-  return <div className='App'></div>;
-}
+import AboutPage from './pages/AboutPage';
+import HomePage from './pages/HomePage';
 
-export default App;
+export default function App() {
+  return (
+    <div className='App'>
+      {/* <HomePage /> */}
+      <AboutPage />
+    </div>
+  );
+}

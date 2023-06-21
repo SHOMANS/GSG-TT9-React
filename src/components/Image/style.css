@@ -1,0 +1,5 @@
+img {
+  margin: 1rem;
+  width: 500px;
+  object-fit: contain;
+}
