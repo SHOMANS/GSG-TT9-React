@@ -1,7 +1,7 @@
 import './style.css';
 
 const Footer = () => {
-  return <footer>copyright GSG TT9 &copy;</footer>;
+  return <footer className='footer'>copyright GSG TT9 &copy;</footer>;
 };
 
 export default Footer;

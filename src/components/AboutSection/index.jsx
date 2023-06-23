@@ -1,20 +1,5 @@
 import React, { Component } from 'react';
-
-const ABOUT_OBJECT = {
-  // name: undefined,
-  firstName: 'Saja',
-  lastName: 'Awadallah',
-  age: 25,
-  isMarried: false,
-  hobbies: ['reading', 'swimming', 'coding'],
-  // address: {
-  //   city: 'Amman',
-  //   country: 'Jordan',
-  // },
-  sayHello: function () {
-    return `Hello from ${ABOUT_OBJECT.firstName}`;
-  },
-};
+import ABOUT_OBJECT from '../../mock/info';
 
 class AboutSection extends Component {
   // getFullName = (obj) => {
