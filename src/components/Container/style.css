@@ -1,0 +1,37 @@
+.main__container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.main__container--padding {
+  padding: 1rem 0;
+}
+
+@media (max-width: 575px) {
+  .main__container {
+    width: 98%;
+  }
+}
+
+@media (min-width: 576px) {
+  .main__container {
+    width: 95%;
+  }
+}
+
+@media (min-width: 768px) {
+  .main__container {
+    width: 90%;
+  }
+}
+
+@media (min-width: 992px) {
+  .main__container {
+    width: 85%;
+  }
+}
+@media (min-width: 1400px) {
+  .main__container {
+    width: 80%;
+  }
+}
