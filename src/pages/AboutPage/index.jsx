@@ -1,20 +1,37 @@
 import React from 'react';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
-import TitledImage from '../../components/TitledImage';
-import AboutSection from '../../components/AboutSection';
+// import TitledImage from '../../components/TitledImage';
+// import AboutSection from '../../components/AboutSection';
 import Card from '../../components/Card';
 import CARDS_DATA from '../../mock/cards';
 
-const IMAGE_SRC =
-  'https://img.freepik.com/free-vector/tree-transparent-background_1308-74201.jpg?w=2000';
+import './style.css';
+import Typo, * as T from '../../components/Typography';
+
+// const IMAGE_SRC =
+//   'https://img.freepik.com/free-vector/tree-transparent-background_1308-74201.jpg?w=2000';
 
 const AboutPage = () => {
   return (
     <div>
       <Header />
 
-      <h1>About Page</h1>
+      {/* <section>
+        <img src='/assets/tree.jpg' alt='tree' />
+      </section>
+
+      <section className='background__image' /> */}
+
+      <Typo variant='h1'>About Page</Typo>
+
+      <T.H1>About Page</T.H1>
+      <T.H2>About Page</T.H2>
+      <T.H3>About Page</T.H3>
+      <T.H4>About Page</T.H4>
+      <T.H5>About Page</T.H5>
+      <T.H6>About Page</T.H6>
+
       {/* 
       <TitledImage src={IMAGE_SRC} title='tree' background />
       <TitledImage src='https://img.freepik.com/free-vector/isolated-tree-white-background_1308-26130.jpg?w=2000' title='tree3' variant='square' background />

@@ -1,35 +1,54 @@
 import React, { Component } from 'react';
 import Container from '../../components/Container';
+import Counter from '../../components/Counter';
 
 class CountersPage extends Component {
   state = {
-    counter: 0,
+    counter1: 0,
+    counter2: 0,
   };
 
-  handleIncrease = () => {
-    console.log('increasing');
+  handleIncrease1 = () => {
     this.setState((prevState) => ({
-      counter: prevState.counter + 1,
+      counter1: prevState.counter1 + 1,
     }));
   };
 
-  handleDecrease = () => {
-    console.log('decreasing');
+  handleDecrease1 = () => {
     this.setState((prevState) => ({
-      counter: prevState.counter - 1,
+      counter1: prevState.counter1 - 1,
+    }));
+  };
+  handleIncrease2 = () => {
+    this.setState((prevState) => ({
+      counter2: prevState.counter2 + 1,
+    }));
+  };
+
+  handleDecrease2 = () => {
+    this.setState((prevState) => ({
+      counter2: prevState.counter2 - 1,
     }));
   };
 
   render() {
-    // let counter = 0; // wrong logic
-
     return (
       <Container>
         <div>
-          <button onClick={this.handleDecrease}>-</button>
-          <span>{this.state.counter}</span>
-          <button onClick={this.handleIncrease}>+</button>
+          <Counter
+            counter={this.state.counter1}
+            handleDecrease={this.handleDecrease1}
+            handleIncrease={this.handleIncrease1}
+          />
+
+          <Counter
+            counter={this.state.counter2}
+            handleDecrease={this.handleDecrease2}
+            handleIncrease={this.handleIncrease2}
+          />
         </div>
+
+        {/* total: {counters.reduce()} */}
       </Container>
     );
   }

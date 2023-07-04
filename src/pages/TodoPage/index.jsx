@@ -6,6 +6,7 @@ import TodoItem from '../../components/TodoItem';
 class TodoPage extends Component {
   state = {
     todos: TODOS,
+    isTodoExist: false,
   };
 
   handleTodoItemClick = (itemId) => {
@@ -27,24 +28,50 @@ class TodoPage extends Component {
   };
 
   render() {
-    return (
-      <div>
-        <section>
-          <Container>
-            <h2>TodoPage</h2>
-            <div style={{ marginTop: 20 }}>
-              {this.state.todos.map((todo) => (
-                <TodoItem
-                  key={todo.id}
-                  todo={todo}
-                  handleClick={this.handleTodoItemClick}
-                />
-              ))}
-            </div>
-          </Container>
-        </section>
-      </div>
-    );
+    if (true) {
+      return (
+        <div>
+          <section>
+            <button
+              onClick={() =>
+                this.setState((prevState) => ({
+                  isTodoExist: !prevState.isTodoExist,
+                }))
+              }
+            >
+              click
+            </button>
+
+            <Container>
+              <h2>TodoPage</h2>
+              <div style={{ marginTop: 20 }}>
+                {this.state.isTodoExist ? (
+                  this.state.todos.map((todo) => (
+                    <TodoItem
+                      key={todo.id}
+                      todo={todo}
+                      handleClick={this.handleTodoItemClick}
+                    />
+                  ))
+                ) : (
+                  <h3>No todos</h3>
+                )}
+              </div>
+            </Container>
+          </section>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <section>
+            <Container>
+              <h1>No todos</h1>
+            </Container>
+          </section>
+        </div>
+      );
+    }
   }
 }
 

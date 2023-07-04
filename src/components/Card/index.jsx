@@ -3,7 +3,9 @@ import TitledImage from '../TitledImage';
 
 class Card extends Component {
   render() {
-    const { title, imageSrc, imageTitle, description, children, actions } = this.props;
+    console.log('from Card render');
+    const { title, imageSrc, imageTitle, description, children, actions } =
+      this.props;
     return (
       <div
         style={{
