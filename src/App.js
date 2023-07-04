@@ -1,6 +1,6 @@
 // import AboutPage from './pages/AboutPage';
 // import HomePage from './pages/HomePage';
-import CountersPage from './pages/CountersPage';
+// import CountersPage from './pages/CountersPage';
 import TodoPage from './pages/TodoPage';
 
 export default function App() {
@@ -8,8 +8,8 @@ export default function App() {
     <div className='App'>
       {/* <HomePage /> */}
       {/* <AboutPage /> */}
-      {/* <TodoPage /> */}
-      <CountersPage />
+      <TodoPage />
+      {/* <CountersPage /> */}
     </div>
   );
 }
