@@ -2,53 +2,82 @@ import React, { Component } from 'react';
 import Container from '../../components/Container';
 import Counter from '../../components/Counter';
 
+const INITIAL_COUNTERS_VALUES = {
+  1: {
+    value: 0,
+    amount: 2,
+  },
+  2: {
+    value: 0,
+    amount: 5,
+  },
+  3: {
+    value: 0,
+    amount: 1,
+  },
+};
+
 class CountersPage extends Component {
   state = {
-    counter1: 0,
-    counter2: 0,
+    counters: INITIAL_COUNTERS_VALUES,
   };
 
-  handleIncrease1 = () => {
+  handleIncrease = (id) => {
     this.setState((prevState) => ({
-      counter1: prevState.counter1 + 1,
-    }));
-  };
-
-  handleDecrease1 = () => {
-    this.setState((prevState) => ({
-      counter1: prevState.counter1 - 1,
-    }));
-  };
-  handleIncrease2 = () => {
-    this.setState((prevState) => ({
-      counter2: prevState.counter2 + 1,
+      counters: {
+        ...prevState.counters,
+        [id]: {
+          ...prevState.counters[id],
+          value: prevState.counters[id].value + prevState.counters[id].amount,
+        },
+      },
     }));
   };
 
-  handleDecrease2 = () => {
-    this.setState((prevState) => ({
-      counter2: prevState.counter2 - 1,
-    }));
+  handleDecrease = (id) => {
+    if (this.state.counters[id].value !== 0) {
+      this.setState((prevState) => ({
+        counters: {
+          ...prevState.counters,
+          [id]: {
+            ...prevState.counters[id],
+            value: prevState.counters[id].value - prevState.counters[id].amount,
+          },
+        },
+      }));
+    }
   };
+
+  shouldComponentUpdate() {
+    if (this.state.counters[1].value > 20) return true;
+    if (this.state.counters[1].value > 10) return false;
+    return true;
+  }
+
+  getSnapshotBeforeUpdate(props, state) {
+    console.log('getSnapshotBeforeUpdate', props, state);
+    return null;
+  }
 
   render() {
     return (
       <Container>
         <div>
-          <Counter
-            counter={this.state.counter1}
-            handleDecrease={this.handleDecrease1}
-            handleIncrease={this.handleIncrease1}
-          />
-
-          <Counter
-            counter={this.state.counter2}
-            handleDecrease={this.handleDecrease2}
-            handleIncrease={this.handleIncrease2}
-          />
+          {Object.entries(this.state.counters).map(([key, object]) => (
+            <Counter
+              key={key}
+              id={key}
+              value={object.value}
+              handleDecrease={this.handleDecrease}
+              handleIncrease={this.handleIncrease}
+            />
+          ))}
         </div>
-
-        {/* total: {counters.reduce()} */}
+        total:
+        {Object.values(this.state.counters).reduce(
+          (acc, cur) => acc + cur.value,
+          0
+        )}
       </Container>
     );
   }

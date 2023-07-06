@@ -1,22 +1,15 @@
 import { Component } from 'react';
-
+import './style.css';
 class Counter extends Component {
-  componentDidMount() {
-    // console.log('componentDidMount from Counter');
-  }
-
-  componentWillUnmount() {
-    console.log('counter componentWillUnmount');
-  }
   render() {
-    // console.log('render from counter');
-    const { handleIncrease, counter, handleDecrease } = this.props;
-
+    const { handleIncrease, handleDecrease, value, id } = this.props;
     return (
-      <div>
-        <button onClick={handleIncrease}>Increase</button>
-        <p>Counter: {counter}</p>
-        <button onClick={handleDecrease}>Decrease</button>
+      <div className='counter'>
+        <button disabled={!value} onClick={() => handleDecrease(id)}>
+          Decrease
+        </button>
+        <p>{value}</p>
+        <button onClick={() => handleIncrease(id)}>Increase</button>
       </div>
     );
   }

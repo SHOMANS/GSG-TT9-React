@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Container from '../../components/Container';
 import TODOS from '../../mock/todos';
 import TodoItem from '../../components/TodoItem';
+import TodoForm from '../../components/TodoForm';
 
 class TodoPage extends Component {
   state = {
@@ -27,6 +28,12 @@ class TodoPage extends Component {
     });
   };
 
+  handleAddTodo = (todo) => {
+    this.setState((prevState) => ({
+      todos: [todo, ...prevState.todos],
+    }));
+  };
+
   render() {
     if (true) {
       return (
@@ -43,6 +50,9 @@ class TodoPage extends Component {
             </button>
 
             <Container>
+              <TodoForm onAddTodo={this.handleAddTodo} />
+              <br />
+
               <h2>TodoPage</h2>
               <div style={{ marginTop: 20 }}>
                 {this.state.isTodoExist ? (
