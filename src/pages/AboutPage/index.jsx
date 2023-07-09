@@ -15,8 +15,6 @@ import Typo, * as T from '../../components/Typography';
 const AboutPage = () => {
   return (
     <div>
-      <Header />
-
       {/* <section>
         <img src='/assets/tree.jpg' alt='tree' />
       </section>
@@ -74,8 +72,6 @@ const AboutPage = () => {
           />
         ) : null
       )}
-
-      <Footer />
     </div>
   );
 };

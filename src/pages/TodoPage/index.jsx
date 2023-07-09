@@ -7,10 +7,10 @@ import TodoForm from '../../components/TodoForm';
 class TodoPage extends Component {
   state = {
     todos: TODOS,
-    isTodoExist: false,
+    isTodoExist: true,
   };
 
-  handleTodoItemClick = (itemId) => {
+  handleRead = (itemId) => {
     this.setState((prevState) => {
       const _todos = prevState.todos.map((item) => {
         if (item.id === itemId) {
@@ -26,6 +26,10 @@ class TodoPage extends Component {
         todos: _todos,
       };
     });
+  };
+
+  handleTodoItemClick = (itemId) => {
+    console.log(itemId);
   };
 
   handleAddTodo = (todo) => {
@@ -60,7 +64,9 @@ class TodoPage extends Component {
                     <TodoItem
                       key={todo.id}
                       todo={todo}
-                      handleClick={this.handleTodoItemClick}
+                      handleRead={this.handleRead}
+                      handleDelete={() => {}}
+                      handleEdit={() => {}}
                     />
                   ))
                 ) : (

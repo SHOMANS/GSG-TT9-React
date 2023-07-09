@@ -1,18 +1,5 @@
-// const Header = () => {
-//   return (
-//     <header>
-//       <h1>Header</h1>
-//     </header>
-//   );
-// };
-
-// import React, { Component } from 'react';
-// class Header extends Component {
-
 import React from 'react';
-// import './style.css';
-
-// import css module file
+import { Link } from 'react-router-dom';
 import styles from './style.module.css';
 
 class Header extends React.Component {
@@ -21,6 +8,30 @@ class Header extends React.Component {
       // className instead of class
       <header className={styles.header}>
         <h1>Header</h1>
+
+        <nav>
+          <ul>
+            <li>
+              <Link to='/'>Home</Link>
+            </li>
+
+            <li>
+              <Link to='/about'>About</Link>
+            </li>
+
+            <li>
+              <Link to='/todo'>Todos</Link>
+            </li>
+
+            <li>
+              <Link to='/counters'>Counters</Link>
+            </li>
+
+            <li>
+              <Link to='/lifecycle'>Life Cycle</Link>
+            </li>
+          </ul>
+        </nav>
       </header>
     );
   }
