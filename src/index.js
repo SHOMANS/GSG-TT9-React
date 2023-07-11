@@ -4,16 +4,9 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 
-/**
- * ./
- * ./components/app
- * ../components/app
- */
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* provider or context */}
     <BrowserRouter>
       <App />
     </BrowserRouter>
