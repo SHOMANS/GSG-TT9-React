@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './style.css';
+import { PATHS } from '../../router/paths';
 
 class Header extends React.Component {
   render() {
@@ -12,19 +13,19 @@ class Header extends React.Component {
         <nav>
           <ul>
             <li>
-              <NavLink to='/'>
+              <NavLink to={PATHS.HOME}>
                 {({ isActive, isPending }) => (isActive ? <u>Home</u> : 'Home')}
               </NavLink>
             </li>
             <li>
-              <NavLink to='/about'>
+              <NavLink to={PATHS.ABOUT}>
                 {({ isActive, isPending }) =>
                   isActive ? <u>About</u> : 'About'
                 }
               </NavLink>
             </li>
             <li>
-              <NavLink to='/posts'>
+              <NavLink to={PATHS.POSTS.ROOT}>
                 {({ isActive, isPending }) =>
                   isActive ? <u>Posts</u> : 'Posts'
                 }

@@ -4,34 +4,33 @@ import HomePage from '../pages/HomePage';
 import AboutPage from '../pages/AboutPage';
 import PostsPage from '../pages/PostsPage';
 import PostPage from '../pages/PostPage';
+import EditPostPage from '../pages/EditPostPage';
+import CreatePostPage from '../pages/CreatePostPage';
 
 import { H1 } from '../components/Typography';
+import { PATHS } from './paths';
 
 const Router = () => {
   return (
     <Routes>
       <Route index element={<HomePage />} />
-      <Route path='about' element={<AboutPage />} />
-      <Route path='posts' element={<Outlet />}>
+      <Route path={PATHS.ABOUT} element={<AboutPage />} />
+      <Route path={PATHS.POSTS.ROOT} element={<Outlet />}>
         <Route index element={<PostsPage />} />
-        <Route path=':id' element={<PostPage />} />
+        <Route path={PATHS.POSTS.VIEW} element={<PostPage />} />
+        <Route path={PATHS.POSTS.EDIT} element={<EditPostPage />} />
+        <Route path={PATHS.POSTS.CREATE} element={<CreatePostPage />} />
       </Route>
 
-      {/* <Route path='counters' element={<CountersPage />} /> */}
-      {/* <Route path='lifecycle' element={<LifeCyclePage counter={10} />} /> */}
+      <Route
+        path={PATHS.ERRORS.NOT_FOUND}
+        element={<H1>Page not found 404</H1>}
+      />
 
-      {/* <Route path='todo' element={<Outlet />}>
-        <Route index element={<TodoPage />} />
-
-        <Route path=':id' element={<AsideLAyout />}>
-          <Route index element={<TodoItemPage />} />
-          <Route path=':name' element={<div>Test Nest Page</div>} />
-        </Route>
-      </Route> */}
-
-      <Route path='404' element={<H1>Page not found 404</H1>} />
-
-      <Route path='*' element={<Navigate to='/404' replace={true} />} />
+      <Route
+        path='*'
+        element={<Navigate to={PATHS.ERRORS.NOT_FOUND} replace={true} />}
+      />
     </Routes>
   );
 };
