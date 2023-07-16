@@ -3,6 +3,7 @@ import WithParams from '../../components/WithParams';
 import Container from '../../components/Container';
 import { Navigate } from 'react-router-dom';
 import { PATHS } from '../../router/paths';
+import axios from 'axios';
 
 class PostPage extends Component {
   state = {
@@ -18,10 +19,17 @@ class PostPage extends Component {
     this.setState({ isEditing: true });
   };
 
-  componentDidMount() {
-    fetch(`https://jsonplaceholder.typicode.com/posts/${this.id}`)
-      .then((response) => response.json())
-      .then((data) => this.setState({ post: data, isLoading: false }));
+  async componentDidMount() {
+    try {
+      const { data } = await axios.get(
+        `https://jsonplaceholder.typicode.com/posts/${this.id}`
+      );
+      this.setState({ post: data });
+    } catch (error) {
+      this.setState({ error: error.message });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
   render() {

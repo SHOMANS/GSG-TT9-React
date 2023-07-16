@@ -16,24 +16,21 @@ class EditPostPage extends Component {
 
   id = this.props.params.id;
 
-  componentDidMount() {
-    fetch(`https://jsonplaceholder.typicode.com/posts/${this.id}`)
-      .then((response) => response.json())
-      .then((data) => this.setState({ post: data, isLoading: false }));
+  async componentDidMount() {
+    try {
+      const { data } = await axios.get(
+        `https://jsonplaceholder.typicode.com/posts/${this.id}`
+      );
+
+      this.setState({ post: data });
+    } catch (error) {
+      this.setState({ error: error.message });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
   handleEditPost = async (body) => {
-    // fetch(`https://jsonplaceholder.typicode.com/posts/${this.id}`, {
-    //   method: 'PUT',
-    //   body: JSON.stringify(body),
-    //   headers: {
-    //     'Content-type': 'application/json; charset=UTF-8',
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) =>
-    //     this.setState({ post: data, isLoading: false, isEditing: false })
-    //   );
     this.setState({ isLoading: true });
     try {
       const res = await axios.put(

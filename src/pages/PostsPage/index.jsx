@@ -11,10 +11,17 @@ class PostsPage extends Component {
     isLoading: true,
   };
 
-  componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then((response) => response.json())
-      .then((data) => this.setState({ posts: data, isLoading: false }));
+  async componentDidMount() {
+    try {
+      const { data } = await axios.get(
+        'https://jsonplaceholder.typicode.com/posts'
+      );
+      this.setState({ posts: data });
+    } catch (error) {
+      this.setState({ error: error.message });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
   handleDelete = async (id) => {

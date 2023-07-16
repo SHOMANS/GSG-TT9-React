@@ -13,27 +13,9 @@ class CreatePostPage extends Component {
   };
 
   handleCreatePost = async (body) => {
-    // fetch(`https://jsonplaceholder.typicode.com/posts`, {
-    //   method: 'POST',
-    //   body: JSON.stringify(body),
-    //   headers: {
-    //     'Content-type': 'application/json; charset=UTF-8',
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) =>
-    //     this.setState({ post: data, isLoading: false, isEditing: false })
-    //   );
-
-    this.setState({ isLoading: true });
     try {
-      const res = await axios.post(
-        'https://jsonplaceholder.typicode.com/posts',
-        body
-      );
+      await axios.post('https://jsonplaceholder.typicode.com/posts', body);
       this.setState({ isLoading: false, isGoToListPage: true });
-
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
