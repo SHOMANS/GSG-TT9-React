@@ -1,75 +1,104 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from '../../components/Table';
 import { Navigate } from 'react-router-dom';
 import { POSTS_COLUMNS } from '../../constants/posts';
 import { PATHS } from '../../router/paths';
 
-class PostsPage extends Component {
-  state = {
-    posts: [],
-    isLoading: true,
-  };
+const PostsPage = () => {
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  async componentDidMount() {
-    try {
-      const { data } = await axios.get(
-        'https://jsonplaceholder.typicode.com/posts'
-      );
-      this.setState({ posts: data });
-    } catch (error) {
-      this.setState({ error: error.message });
-    } finally {
-      this.setState({ isLoading: false });
-    }
-  }
+  /**
+   * useEffect(() => {}, []); // it takes call back function, and array of dependencies
+   * useEffect(() => {}); // after every render
+   * useEffect(() => {}, []); // after first render only
+   * useEffect(() => {}, [counters]); // after first render, and after every change of the [dependencies]
+   * useEffect(() => {}, [counters, isLoading]); // after first render, and after every change of the [dependencies]
+   * useEffect(() => {
+   *  return () => {
+   *    console.log('un mounting');
+   *  };
+   * }, []); // in mounting and before unmounting
+   */
 
-  handleDelete = async (id) => {
+  // const fetchData = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     const { data } = await axios.get(
+  //       'https://jsonplaceholder.typicode.com/posts'
+  //     );
+  //     setPosts(data);
+  //   } catch (error) {
+  //     setError(error.message);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  useEffect(() => {
+    // fetchData();
+
+    (async () => {
+      setIsLoading(true);
+      try {
+        const { data } = await axios.get(
+          'https://jsonplaceholder.typicode.com/posts'
+        );
+        setPosts(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
+
+  const handleDelete = async (id) => {
     console.log(id, 'is deleted');
+    setIsLoading(true);
     try {
-      axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+      await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+      setPosts(posts.filter((post) => post.id !== id));
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  handleEdit = (id) => {
+  const handleEdit = (id) => {
     console.log(id, 'is edited');
-    this.setState({ editId: id });
   };
 
-  handleView = (row) => {
+  const handleView = (row) => {
     console.log(row.id, 'is viewed');
-    this.setState({ rowId: row.id });
   };
 
-  render() {
-    return (
-      <div>
-        <h1>Posts</h1>
+  return (
+    <div>
+      <h1>Posts</h1>
 
-        <button onClick={() => this.setState({ isCreating: true })}>
-          Create Post
-        </button>
+      <button onClick={() => console.log('create')}>Create Post</button>
 
-        <Table
-          columns={POSTS_COLUMNS(this.handleDelete, this.handleEdit)}
-          data={this.state.posts}
-          onRowClick={this.handleView}
-          isLoading={this.state.isLoading}
+      <Table
+        columns={POSTS_COLUMNS(handleDelete, handleEdit)}
+        data={posts}
+        onRowClick={handleView}
+        isLoading={isLoading}
+      />
+
+      {/* {this.state.rowId && <Navigate to={`${this.state.rowId}`} replace />}
+      {this.state.editId && (
+        <Navigate
+          to={PATHS.POSTS.EDIT.replace(':id', this.state?.editId)}
+          replace
         />
-
-        {this.state.rowId && <Navigate to={`${this.state.rowId}`} replace />}
-        {this.state.editId && (
-          <Navigate
-            to={PATHS.POSTS.EDIT.replace(':id', this.state?.editId)}
-            replace
-          />
-        )}
-        {this.state?.isCreating && <Navigate to={PATHS.POSTS.CREATE} replace />}
-      </div>
-    );
-  }
-}
+      )}
+      {this.state?.isCreating && <Navigate to={PATHS.POSTS.CREATE} replace />} */}
+    </div>
+  );
+};
 
 export default PostsPage;

@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
+
 import Container from '../../components/Container';
 import Counter from '../../components/Counter';
 
@@ -17,77 +18,76 @@ const INITIAL_COUNTERS_VALUES = {
   },
 };
 
-class CountersPage extends Component {
-  state = {
-    counters: INITIAL_COUNTERS_VALUES,
-  };
+const CountersPage = () => {
+  const [counters, setCounters] = useState(() => INITIAL_COUNTERS_VALUES);
 
-  handleIncrease = (id) => {
-    this.setState((prevState) => ({
-      counters: {
-        ...prevState.counters,
-        [id]: {
-          ...prevState.counters[id],
-          value: prevState.counters[id].value + prevState.counters[id].amount,
-        },
+  const handleIncrease = (id) => {
+    setCounters((prevState) => ({
+      ...prevState,
+      [id]: {
+        ...prevState[id],
+        value: prevState[id].value + prevState[id].amount,
       },
     }));
   };
 
-  handleDecrease = (id) => {
-    if (this.state.counters[id].value !== 0) {
-      this.setState((prevState) => ({
-        counters: {
-          ...prevState.counters,
-          [id]: {
-            ...prevState.counters[id],
-            value: prevState.counters[id].value - prevState.counters[id].amount,
-          },
+  const handleDecrease = (id) => {
+    if (counters[id].value !== 0) {
+      setCounters((prevState) => ({
+        ...prevState,
+        [id]: {
+          ...prevState[id],
+          value: prevState[id].value - prevState[id].amount,
         },
       }));
     }
   };
 
-  shouldComponentUpdate() {
-    if (this.state.counters[1].value > 20) return true;
-    if (this.state.counters[1].value > 10) return false;
-    return true;
-  }
-
-  getSnapshotBeforeUpdate(props, state) {
-    console.log('getSnapshotBeforeUpdate', props, state);
-    return null;
-  }
-
-  render() {
-    return (
-      <Container>
-        <div>
-          {Object.entries(this.state.counters).map(([key, object]) => (
-            <Counter
-              key={key}
-              id={key}
-              value={object.value}
-              handleDecrease={this.handleDecrease}
-              handleIncrease={this.handleIncrease}
-            />
-          ))}
-        </div>
-        total:
-        {Object.values(this.state.counters).reduce(
-          (acc, cur) => acc + cur.value,
-          0
-        )}
-      </Container>
-    );
-  }
-}
+  return (
+    <Container>
+      <div>
+        {Object.entries(counters).map(([key, object]) => (
+          <Counter
+            key={key}
+            id={key}
+            value={object.value}
+            handleDecrease={handleDecrease}
+            handleIncrease={handleIncrease}
+          />
+        ))}
+      </div>
+      total:
+      {Object.values(counters).reduce((acc, cur) => acc + cur.value, 0)}
+    </Container>
+  );
+};
 
 export default CountersPage;
 
-// const setState = (cb) => {
-//   let state;
-//   const prevState = state;
-//   const newState = cb(prevState);
-//   state = newState;
+// const useTestState = (initialValue) => {
+//   let state = initialValue;
+
+//   const setState = (cb) => {
+//     const newState = typeof cb === 'function' ? cb(state) : cb;
+//     state = newState;
+//   };
+
+//   return [state, setState];
 // };
+
+// eslint-disable-next-line react-hooks/rules-of-hooks
+// const [state, setState] = useTestState(0);
+
+// console.log(state);
+
+// setState(1);
+
+// console.log(state);
+
+// setState((prevState) => prevState + 1);
+
+// const arr = [1, 2, 3, 4];
+
+// const [, secondValue] = arr;
+
+// console.log(secondValue);

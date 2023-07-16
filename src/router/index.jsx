@@ -6,6 +6,7 @@ import PostsPage from '../pages/PostsPage';
 import PostPage from '../pages/PostPage';
 import EditPostPage from '../pages/EditPostPage';
 import CreatePostPage from '../pages/CreatePostPage';
+import CountersPage from '../pages/CountersPage';
 
 import { H1 } from '../components/Typography';
 import { PATHS } from './paths';
@@ -15,6 +16,7 @@ const Router = () => {
     <Routes>
       <Route index element={<HomePage />} />
       <Route path={PATHS.ABOUT} element={<AboutPage />} />
+      <Route path={PATHS.COUNTERS} element={<CountersPage />} />
       <Route path={PATHS.POSTS.ROOT} element={<Outlet />}>
         <Route index element={<PostsPage />} />
         <Route path={PATHS.POSTS.VIEW} element={<PostPage />} />

@@ -5,10 +5,10 @@ import Router from './router';
 export default function App() {
   return (
     <div className='App'>
-      {/* <MainLayout>
+      <MainLayout>
         <Router />
-      </MainLayout> */}
-      <Hooks />
+      </MainLayout>
+      {/* <Hooks /> */}
     </div>
   );
 }
