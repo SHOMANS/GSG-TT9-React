@@ -1,56 +1,50 @@
-import React, { Component } from 'react';
-import WithParams from '../../components/WithParams';
+import React, { useState } from 'react';
 import Container from '../../components/Container';
-import { Navigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PATHS } from '../../router/paths';
 import axios from 'axios';
 
-class PostPage extends Component {
-  state = {
-    post: null,
-    isLoading: true,
-    isEditing: false,
-  };
+import { useEffect } from 'react';
+import { API_URL } from '../../config/api';
 
-  id = this.props?.params?.id;
+const PostPage = () => {
+  const [post, setPost] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  handleEdit = () => {
-    console.log(this.id, 'is edited');
-    this.setState({ isEditing: true });
-  };
+  const navigate = useNavigate();
+  const { id } = useParams();
 
-  async componentDidMount() {
-    try {
-      const { data } = await axios.get(
-        `https://jsonplaceholder.typicode.com/posts/${this.id}`
-      );
-      this.setState({ post: data });
-    } catch (error) {
-      this.setState({ error: error.message });
-    } finally {
-      this.setState({ isLoading: false });
-    }
-  }
+  const handleEdit = () => navigate(PATHS.POSTS.EDIT.replace(':id', id));
 
-  render() {
-    return (
-      <Container>
-        {this.state.isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <>
-            <h1>Post {this.state.post.id}</h1>
-            <h2>{this.state.post?.title}</h2>
-            <p>{this.state.post.body}</p>
-          </>
-        )}
-        <button onClick={this.handleEdit}>Edit</button>
-        {this.state.isEditing && (
-          <Navigate to={PATHS.POSTS.EDIT.replace(':id', this.id)} replace />
-        )}
-      </Container>
-    );
-  }
-}
+  useEffect(() => {
+    (async () => {
+      setIsLoading(true);
+      try {
+        const { data } = await axios.get(`${API_URL}posts/${id}`);
+        setPost(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, [id]);
 
-export default WithParams(PostPage);
+  return (
+    <Container>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <h1>Post {post?.id}</h1>
+          <h2>{post?.title}</h2>
+          <p>{post?.author}</p>
+        </>
+      )}
+      <button onClick={handleEdit}>Edit</button>
+    </Container>
+  );
+};
+
+export default PostPage;

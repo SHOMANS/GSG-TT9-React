@@ -1,0 +1,15 @@
+{
+  "posts": [
+    {
+      "title": "hazem is the best",
+      "author": "hazem",
+      "id": 3
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode",
+    "age": 17,
+    "email": "test@test.com"
+  }
+}

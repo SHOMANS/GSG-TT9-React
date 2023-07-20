@@ -6,6 +6,7 @@ import Container from '../../components/Container';
 import PostForm from '../../components/PostForm';
 import { PATHS } from '../../router/paths';
 import { Navigate } from 'react-router-dom';
+import { API_URL } from '../../config/api';
 
 class EditPostPage extends Component {
   state = {
@@ -18,9 +19,7 @@ class EditPostPage extends Component {
 
   async componentDidMount() {
     try {
-      const { data } = await axios.get(
-        `https://jsonplaceholder.typicode.com/posts/${this.id}`
-      );
+      const { data } = await axios.get(`${API_URL}posts/${this.id}`);
 
       this.setState({ post: data });
     } catch (error) {
@@ -30,19 +29,20 @@ class EditPostPage extends Component {
     }
   }
 
+  // const navigate = useNavigate() // use it in functional component
   handleEditPost = async (body) => {
     this.setState({ isLoading: true });
     try {
-      const res = await axios.put(
-        `https://jsonplaceholder.typicode.com/posts/${this.id}`,
-        body
-      );
+      const res = await axios.put(`${API_URL}posts/${this.id}`, body);
       console.log(res.data);
       this.setState({
         post: res.data,
         isLoading: false,
         isGotToListPage: true,
       });
+
+      // navigate back to list page after edit successfully
+      // navigate(PATHS.POSTS.ROOT)
     } catch (error) {
       console.log(error.message);
     }

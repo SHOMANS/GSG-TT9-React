@@ -5,17 +5,20 @@ import Container from '../../components/Container';
 import PostForm from '../../components/PostForm';
 import { Navigate } from 'react-router-dom';
 import { PATHS } from '../../router/paths';
+import { API_URL } from '../../config/api';
 
 class CreatePostPage extends Component {
   state = {
     isLoading: false,
     isGoToListPage: false,
   };
+  // const navigate = useNavigate() // in functional component
 
   handleCreatePost = async (body) => {
     try {
-      await axios.post('https://jsonplaceholder.typicode.com/posts', body);
+      await axios.post(API_URL + 'posts', body);
       this.setState({ isLoading: false, isGoToListPage: true });
+      // navigate(PATHS.POSTS.ROOT)
     } catch (error) {
       console.log(error.message);
     }

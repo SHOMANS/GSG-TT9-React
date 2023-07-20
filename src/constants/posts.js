@@ -8,8 +8,8 @@ export const POSTS_COLUMNS = (handleDelete, handleEdit) => [
     title: 'Title',
   },
   {
-    key: 'body',
-    title: 'Body',
+    key: 'author',
+    title: 'Author',
   },
   {
     // key: 'user.id'
