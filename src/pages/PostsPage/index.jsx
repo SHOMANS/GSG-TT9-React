@@ -5,56 +5,45 @@ import { useNavigate } from 'react-router-dom';
 import { POSTS_COLUMNS } from '../../constants/posts';
 import { PATHS } from '../../router/paths';
 import { API_URL } from '../../config/api';
+import useAPI from '../../hooks/useAPI';
 
 const PostsPage = () => {
   const navigate = useNavigate();
-  // const [state, setState] = useState({
-  //   posts: [],
-  //   isLoading: false,
-  //   error: null,
-  // }); // this is bad
+  const { get, del, data, isLoading } = useAPI(API_URL + 'posts');
 
-  const [posts, setPosts] = useState([]);
-  // const [user, setUser] = useState({
-  //   name: '',
-  //   email: '',
-  //   password: '',
-  // }); // this is better
+  // const [posts, setPosts] = useState([]);
 
-  // this is bad ⬇️
-  // const [userName, setUserName] = useState('');
-  // const [userEmail, setUserEmail] = useState('');
-  // const [userPassword, setUserPassword] = useState('');
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [error, setError] = useState(null);
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const fetchData = async () => {
 
-  const fetchData = async () => {
-    setIsLoading(true);
-    try {
-      const { data } = await axios.get(API_URL + 'posts');
-      setPosts(data);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // setIsLoading(true);
+  // try {
+  //   const { data } = await axios.get(API_URL + 'posts');
+  //   setPosts(data);
+  // } catch (error) {
+  //   setError(error.message);
+  // } finally {
+  //   setIsLoading(false);
+  // }
+  // };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    get();
+  }, [get]);
 
   const handleDelete = async (id) => {
-    setIsLoading(true);
-    try {
-      await axios.delete(`${API_URL}posts/${id}`);
-      setPosts(posts.filter((post) => post.id !== id));
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-    }
+    del(id);
+    // setIsLoading(true);
+    // try {
+    //   await axios.delete(`${API_URL}posts/${id}`);
+    //   setPosts(posts.filter((post) => post.id !== id));
+    // } catch (err) {
+    //   console.log(err);
+    // } finally {
+    //   setIsLoading(false);
+    // }
   };
 
   const handleEdit = (id) => {
@@ -73,7 +62,7 @@ const PostsPage = () => {
 
       <Table
         columns={POSTS_COLUMNS(handleDelete, handleEdit)}
-        data={posts}
+        data={data}
         onRowClick={handleView}
         isLoading={isLoading}
       />

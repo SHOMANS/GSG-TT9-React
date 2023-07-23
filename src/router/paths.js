@@ -2,6 +2,8 @@ export const PATHS = {
   HOME: '/',
   ABOUT: '/about',
   COUNTERS: '/counters',
+  LOGIN: '/login',
+  GIFF_SEARCH: '/giff',
   POSTS: {
     ROOT: '/posts',
     VIEW: `/posts/:id`,

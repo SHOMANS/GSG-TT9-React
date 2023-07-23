@@ -10,7 +10,10 @@ import CountersPage from '../pages/CountersPage';
 import { H1 } from '../components/Typography';
 
 import { PATHS } from './paths';
-import AdminGuard from '../components/AdminGuard';
+import AdminGuard from '../components/Guards/AdminGuard';
+import GuestGuard from '../components/Guards/GuestGuard';
+import UserGuard from '../components/Guards/UserGuard';
+import Giffs from '../pages/Giffs';
 
 // available for admins only
 const adminPages = (role) => [
@@ -31,10 +34,10 @@ const adminPages = (role) => [
 ];
 
 // available for only users with an account
-const userPages = [
+const userPages = (role) => [
   {
     path: PATHS.POSTS.ROOT,
-    element: <Outlet />,
+    element: <UserGuard role={role} />,
     children: [
       {
         index: true,
@@ -54,21 +57,43 @@ const userPages = [
       },
     ],
   },
+];
+
+const guestPages = (role) => [
+  {
+    index: true,
+    element: (
+      <GuestGuard role={role}>
+        <HomePage />
+      </GuestGuard>
+    ),
+  },
+  {
+    path: PATHS.ABOUT,
+    element: (
+      <GuestGuard role={role}>
+        <AboutPage />
+      </GuestGuard>
+    ),
+  },
   {
     path: PATHS.COUNTERS,
-    element: <CountersPage />,
+    element: (
+      <GuestGuard role={role}>
+        <CountersPage />
+      </GuestGuard>
+    ),
   },
 ];
 
 // available for all roles
-const routes = [
+const routes = (role) => [
+  ...guestPages(role),
+  ...userPages(role),
+  ...adminPages(role),
   {
-    index: true,
-    element: <HomePage />,
-  },
-  {
-    path: PATHS.ABOUT,
-    element: <AboutPage />,
+    path: PATHS.GIFF_SEARCH,
+    element: <Giffs />,
   },
   {
     path: PATHS.ERRORS.NOT_FOUND,
