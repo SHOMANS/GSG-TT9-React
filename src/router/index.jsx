@@ -2,9 +2,10 @@ import { useRoutes } from 'react-router-dom';
 
 import { routes } from './routes';
 import { useState } from 'react';
+import { ROLES } from '../constants';
 
 const Router = () => {
-  const [role] = useState('user'); // guest | user | admin
+  const [role] = useState(ROLES.USER); // guest | user | admin
 
   const router = useRoutes(routes(role));
 

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import Table from '../../components/Table';
 import { useNavigate } from 'react-router-dom';
 import { POSTS_COLUMNS } from '../../constants/posts';
@@ -11,39 +10,12 @@ const PostsPage = () => {
   const navigate = useNavigate();
   const { get, del, data, isLoading } = useAPI(API_URL + 'posts');
 
-  // const [posts, setPosts] = useState([]);
-
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState(null);
-
-  // const fetchData = async () => {
-
-  // setIsLoading(true);
-  // try {
-  //   const { data } = await axios.get(API_URL + 'posts');
-  //   setPosts(data);
-  // } catch (error) {
-  //   setError(error.message);
-  // } finally {
-  //   setIsLoading(false);
-  // }
-  // };
-
   useEffect(() => {
     get();
   }, [get]);
 
   const handleDelete = async (id) => {
     del(id);
-    // setIsLoading(true);
-    // try {
-    //   await axios.delete(`${API_URL}posts/${id}`);
-    //   setPosts(posts.filter((post) => post.id !== id));
-    // } catch (err) {
-    //   console.log(err);
-    // } finally {
-    //   setIsLoading(false);
-    // }
   };
 
   const handleEdit = (id) => {

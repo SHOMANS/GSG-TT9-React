@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import AboutPage from '../pages/AboutPage';
 import HomePage from '../pages/HomePage';
 import PostsPage from '../pages/PostsPage';
