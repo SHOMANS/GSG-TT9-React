@@ -10,8 +10,9 @@ const useAPI = (url, config) => {
 
   const get = async (getConfig) => {
     try {
-      const res = await axios.get(url, { ...config, ...getConfig });
       setIsLoading(true);
+      const res = await axios.get(url, { ...config, ...getConfig });
+
       setData(res?.data?.data || res?.data);
     } catch (error) {
       setError(error);
@@ -22,8 +23,8 @@ const useAPI = (url, config) => {
 
   const getSingle = async (id, getConfig) => {
     try {
-      const res = await axios.get(`${url}/${id}`, { ...config, ...getConfig });
       setIsLoading(true);
+      const res = await axios.get(`${url}/${id}`, { ...config, ...getConfig });
       setItem(res?.data?.data || res?.data);
     } catch (error) {
       setError(error);
@@ -32,11 +33,11 @@ const useAPI = (url, config) => {
     }
   };
 
-  const post = async (body) => {
+  const post = async (body, postConfig) => {
     try {
-      const res = await axios.post(url, body, config);
       setIsLoading(true);
-      setData((prevState) => [...prevState, res.data.data]);
+      const res = await axios.post(url, body, { ...config, ...postConfig });
+      setData((prevState) => [...prevState, res.data?.data || res.data]);
       setMessage('Success!');
     } catch (error) {
       setError(error);
@@ -45,10 +46,13 @@ const useAPI = (url, config) => {
     }
   };
 
-  const put = async (body) => {
+  const put = async (id, body, putConfig) => {
     try {
-      const res = await axios.put(url, body, config);
       setIsLoading(true);
+      const res = await axios.put(url + id, body, {
+        ...putConfig,
+        ...config,
+      });
       setData((prevState) =>
         prevState.map((item) => (item.id === body.id ? res.data.data : item))
       );
@@ -60,11 +64,11 @@ const useAPI = (url, config) => {
     }
   };
 
-  const del = async (id) => {
+  const del = async (id, delConfig) => {
     try {
-      await axios.delete(`${url}/${id}`, config);
-      setData((prevState) => prevState.filter((item) => item.id !== id));
       setIsLoading(true);
+      await axios.delete(`${url}/${id}`, { ...config, ...delConfig });
+      setData((prevState) => prevState.filter((item) => item.id !== id));
     } catch (error) {
       setError(error);
     } finally {

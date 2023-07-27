@@ -16,7 +16,8 @@ class CreatePostPage extends Component {
 
   handleCreatePost = async (body) => {
     try {
-      await axios.post(API_URL + 'posts', body);
+      // localhost:3001/posts
+      await axios.post(`${API_URL}posts`, body);
       this.setState({ isLoading: false, isGoToListPage: true });
       // navigate(PATHS.POSTS.ROOT)
     } catch (error) {

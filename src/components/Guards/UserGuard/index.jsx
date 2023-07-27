@@ -1,9 +1,10 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { PATHS } from '../../../router/paths';
+import { ROLES } from '../../../constants';
 
 const UserGuard = ({ role }) => {
-  if (role === 'user') return <Outlet />;
+  if (role === ROLES.USER) return <Outlet />;
   return <Navigate to={PATHS.HOME} replace={true} />;
 };
 

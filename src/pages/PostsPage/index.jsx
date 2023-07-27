@@ -8,11 +8,8 @@ import useAPI from '../../hooks/useAPI';
 
 const PostsPage = () => {
   const navigate = useNavigate();
-  const { get, del, data, isLoading } = useAPI(API_URL + 'posts');
-
-  useEffect(() => {
-    get();
-  }, [get]);
+  const config = { headers: { Authorization: 'Bearer lskfjhlkf' } };
+  const { get, del, data, isLoading } = useAPI(API_URL + 'posts', config);
 
   const handleDelete = async (id) => {
     del(id);
@@ -25,6 +22,10 @@ const PostsPage = () => {
   const handleView = (row) => {
     navigate(PATHS.POSTS.VIEW.replace(':id', row.id));
   };
+
+  useEffect(() => {
+    get({ params: { limit: 10, page: 1 } });
+  }, []);
 
   return (
     <div>
