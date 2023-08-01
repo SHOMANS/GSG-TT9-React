@@ -6,6 +6,8 @@ import PostPage from '../pages/PostPage';
 import EditPostPage from '../pages/EditPostPage';
 import CreatePostPage from '../pages/CreatePostPage';
 import CountersPage from '../pages/CountersPage';
+import LoginPage from '../pages/LoginPage';
+import SignUpPage from '../pages/SignUpPage';
 
 import { H1 } from '../components/Typography';
 
@@ -16,10 +18,10 @@ import UserGuard from '../components/Guards/UserGuard';
 import Giffs from '../pages/Giffs';
 
 // available for admins only
-const adminPages = (role) => [
+const adminPages = [
   {
     path: PATHS.ADMIN.ROOT,
-    element: <AdminGuard role={role} />,
+    element: <AdminGuard />,
     children: [
       {
         index: true,
@@ -34,10 +36,10 @@ const adminPages = (role) => [
 ];
 
 // available for only users with an account
-const userPages = (role) => [
+const userPages = [
   {
     path: PATHS.POSTS.ROOT,
-    element: <UserGuard role={role} />,
+    element: <UserGuard />,
     children: [
       {
         index: true,
@@ -59,11 +61,30 @@ const userPages = (role) => [
   },
 ];
 
-const guestPages = (role) => [
+const authPages = [
+  {
+    path: PATHS.LOGIN,
+    element: (
+      <GuestGuard>
+        <LoginPage />
+      </GuestGuard>
+    ),
+  },
+  {
+    path: PATHS.SIGNUP,
+    element: (
+      <GuestGuard>
+        <SignUpPage />
+      </GuestGuard>
+    ),
+  },
+];
+
+const guestPages = [
   {
     index: true,
     element: (
-      <GuestGuard role={role}>
+      <GuestGuard>
         <HomePage />
       </GuestGuard>
     ),
@@ -71,7 +92,7 @@ const guestPages = (role) => [
   {
     path: PATHS.ABOUT,
     element: (
-      <GuestGuard role={role}>
+      <GuestGuard>
         <AboutPage />
       </GuestGuard>
     ),
@@ -79,18 +100,19 @@ const guestPages = (role) => [
   {
     path: PATHS.COUNTERS,
     element: (
-      <GuestGuard role={role}>
+      <GuestGuard>
         <CountersPage />
       </GuestGuard>
     ),
   },
+  ...authPages,
 ];
 
 // available for all roles
-const routes = (role) => [
-  ...guestPages(role),
-  ...userPages(role),
-  ...adminPages(role),
+const routes = [
+  ...guestPages,
+  ...userPages,
+  ...adminPages,
   {
     path: PATHS.GIFF_SEARCH,
     element: <Giffs />,

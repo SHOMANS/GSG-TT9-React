@@ -2,15 +2,42 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './style.css';
 import { PATHS } from '../../router/paths';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { ROLES } from '../../constants';
 
-class Header extends React.Component {
-  render() {
-    return (
-      // className instead of class
-      <header className='header'>
-        <h1>Header</h1>
+const Header = () => {
+  const { role, user, setUser, setToken, setRole } = useAuthContext();
 
-        <nav>
+  const handleLogout = () => {
+    setUser(null);
+    setToken('');
+    setRole(ROLES.GUEST);
+  };
+
+  return (
+    // className instead of class
+    <header className='header'>
+      <h1>Header</h1>
+
+      <nav>
+        {role === ROLES.GUEST ? (
+          <ul>
+            <li>
+              <NavLink to={PATHS.LOGIN}>
+                {({ isActive, isPending }) =>
+                  isActive ? <u>Login</u> : 'Login'
+                }
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={PATHS.SIGNUP}>
+                {({ isActive, isPending }) =>
+                  isActive ? <u>Sign up</u> : 'Sign up'
+                }
+              </NavLink>
+            </li>
+          </ul>
+        ) : (
           <ul>
             <li>
               <NavLink to={PATHS.HOME}>
@@ -43,24 +70,17 @@ class Header extends React.Component {
                 }
               </NavLink>
             </li>
-
-            {/* 
             <li>
-              <NavLink to='/todo'>Todos</NavLink>
+              <button onClick={handleLogout}>Logout</button>
             </li>
-
             <li>
-              <NavLink to='/counters'>Counters</NavLink>
+              <h4>Welcome {user?.username}</h4>
             </li>
-
-            <li>
-              <NavLink to='/lifecycle'>Life Cycle</NavLink>
-            </li> */}
           </ul>
-        </nav>
-      </header>
-    );
-  }
-}
+        )}
+      </nav>
+    </header>
+  );
+};
 
 export default Header;

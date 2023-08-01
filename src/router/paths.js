@@ -3,6 +3,7 @@ export const PATHS = {
   ABOUT: '/about',
   COUNTERS: '/counters',
   LOGIN: '/login',
+  SIGNUP: '/signup',
   GIFF_SEARCH: '/giff',
   POSTS: {
     ROOT: '/posts',

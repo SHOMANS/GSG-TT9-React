@@ -1,21 +1,29 @@
-import React, { Component } from 'react';
-
 import { Link } from 'react-router-dom';
 
 import { PATHS } from '../../router/paths';
+// import { RoleContext } from '../../App';
+import { ROLES } from '../../constants';
+import { useAuthContext } from '../../contexts/AuthContext';
 
-class HomePage extends Component {
-  render() {
-    return (
-      <div>
-        <h1>Home Page</h1>
+const HomePage = () => {
+  const data = useAuthContext();
 
-        <p>
-          <Link to={PATHS.ABOUT}>learn more...</Link>
-        </p>
-      </div>
-    );
-  }
-}
+  console.log(data);
+  return (
+    <div>
+      <h1>Home Page</h1>
+
+      <h2>Hello My {data.role}</h2>
+
+      <button onClick={() => data.setRole(ROLES.ADMIN)}>be admin</button>
+      <button onClick={() => data.setRole(ROLES.USER)}>be user</button>
+      <button onClick={() => data.setRole(ROLES.GUEST)}>be guest</button>
+
+      <p>
+        <Link to={PATHS.ABOUT}>learn more...</Link>
+      </p>
+    </div>
+  );
+};
 
 export default HomePage;
