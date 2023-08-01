@@ -1,92 +1,142 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useReducer } from 'react';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'Request_Start':
+      return {
+        ...state,
+        isLoading: true
+      };
+    case 'Request_Success':
+      return {
+        ...state,
+        isLoading: false,
+        data: action.payload
+      };
+    case 'Request_Failure':
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case 'Request_Success_Single_Item':
+      return {
+        ...state,
+        isLoading: false,
+        item: action.payload
+      };
+
+    case 'Request_Success_Post':
+      return {
+        ...state,
+        isLoading: false,
+        data: [...state.data, action.payload],
+        message: 'Success!'
+      };
+
+    case 'Request_Success_Put':
+      return {
+        ...state,
+        isLoading: false,
+        data: state.data.map((item) => (item.id === action.payload.id ? action.payload.data : item)),
+        message: 'Success!'
+      };
+    
+    case 'Request_Success_Delete':
+      return {
+        ...state,
+        isLoading: false,
+        data: state.data.filter((item) => item.id !== action.payload),
+        message: 'Success!'
+      };
+    
+      default:
+        return state;
+  }
+}
+
+const initialState = {
+  isLoading: false,
+  data: [],
+  error: null,
+  message: '',
+  item: null
+}
 
 const useAPI = (url, config) => {
-  const [data, setData] = useState([]);
-  const [item, setItem] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [message, setMessage] = useState('');
+
+  const [state,dispatch] = useReducer(reducer, initialState)
 
   const get = async (getConfig) => {
     try {
-      setIsLoading(true);
+      dispatch({type: 'Request_Start'}) // no need for payload
+
       const res = await axios.get(url, { ...config, ...getConfig });
 
-      setData(res?.data?.data || res?.data);
+      dispatch({type: 'Request_Success', payload: res?.data?.data || res?.data})
     } catch (error) {
-      setError(error);
-    } finally {
-      setIsLoading(false);
+      dispatch({type: 'Request_Failure', payload: error})
     }
   };
 
   const getSingle = async (id, getConfig) => {
     try {
-      setIsLoading(true);
+      dispatch({type: 'Request_Start'})
+      
       const res = await axios.get(`${url}/${id}`, { ...config, ...getConfig });
-      setItem(res?.data?.data || res?.data);
+      dispatch({type: 'Request_Success_Single_Item', payload: res?.data?.data || res?.data})
     } catch (error) {
-      setError(error);
-    } finally {
-      setIsLoading(false);
+      dispatch({type: 'Request_Failure', payload: error})
     }
   };
 
   const post = async (body, postConfig) => {
     try {
-      setIsLoading(true);
+      dispatch({type: 'Request_Start'})
+
       const res = await axios.post(url, body, { ...config, ...postConfig });
-      setData((prevState) => [...prevState, res.data?.data || res.data]);
-      setMessage('Success!');
+      dispatch({type: 'Request_Success_Post', payload: res?.data?.data || res?.data})
     } catch (error) {
-      setError(error);
-    } finally {
-      setIsLoading(false);
+      dispatch({type: 'Request_Failure', payload: error})
     }
   };
 
   const put = async (id, body, putConfig) => {
     try {
-      setIsLoading(true);
+      dispatch({type: 'Request_Start'})
+
       const res = await axios.put(url + id, body, {
         ...putConfig,
         ...config,
       });
-      setData((prevState) =>
-        prevState.map((item) => (item.id === body.id ? res.data.data : item))
-      );
-      setMessage('Success!');
+
+      dispatch({type: 'Request_Success_Put', payload: {id: body.id, data: res?.data?.data || res?.data}})
+      
     } catch (error) {
-      setError(error);
-    } finally {
-      setIsLoading(false);
+      dispatch({type: 'Request_Failure', payload: error})
     }
   };
 
   const del = async (id, delConfig) => {
     try {
-      setIsLoading(true);
+      dispatch({type: 'Request_Start'})
+      
       await axios.delete(`${url}/${id}`, { ...config, ...delConfig });
-      setData((prevState) => prevState.filter((item) => item.id !== id));
+      
+      dispatch({type: 'Request_Success_Delete', payload: id})
     } catch (error) {
-      setError(error);
-    } finally {
-      setIsLoading(false);
+      dispatch({type: 'Request_Failure', payload: error})
     }
   };
 
   return {
-    data,
-    isLoading,
-    error,
-    message,
+    ...state,
     get,
     post,
     put,
     del,
     getSingle,
-    item,
   };
 };
 
