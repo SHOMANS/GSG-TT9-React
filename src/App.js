@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import MainLayout from './components/MainLayout';
 import { useThemeContext } from './contexts/ThemeContext';
 import Router from './router';
@@ -12,7 +13,9 @@ export default function App() {
       {/* <UseMemoComponent /> */}
       {/* <UseCallbackComponent /> */}
       <MainLayout>
-        <Router />
+        <Suspense fallback={<h1>Loading....</h1>}>
+          <Router />
+        </Suspense>
       </MainLayout>
     </div>
   );

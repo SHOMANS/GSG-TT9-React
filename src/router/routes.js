@@ -1,14 +1,5 @@
+import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
-import AboutPage from '../pages/AboutPage';
-import HomePage from '../pages/HomePage';
-import PostsPage from '../pages/PostsPage';
-import PostPage from '../pages/PostPage';
-import EditPostPage from '../pages/EditPostPage';
-import CreatePostPage from '../pages/CreatePostPage';
-import CountersPage from '../pages/CountersPage';
-import LoginPage from '../pages/LoginPage';
-import SignUpPage from '../pages/SignUpPage';
-import FormPage from '../pages/FormPage';
 
 import { H1 } from '../components/Typography';
 
@@ -16,7 +7,18 @@ import { PATHS } from './paths';
 import AdminGuard from '../components/Guards/AdminGuard';
 import GuestGuard from '../components/Guards/GuestGuard';
 import UserGuard from '../components/Guards/UserGuard';
-import Giffs from '../pages/Giffs';
+
+const AboutPage = lazy(() => import('../pages/AboutPage'));
+const HomePage = lazy(() => import('../pages/HomePage'));
+const PostsPage = lazy(() => import('../pages/PostsPage'));
+const PostPage = lazy(() => import('../pages/PostPage'));
+const EditPostPage = lazy(() => import('../pages/EditPostPage'));
+const CreatePostPage = lazy(() => import('../pages/CreatePostPage'));
+const CountersPage = lazy(() => import('../pages/CountersPage'));
+const LoginPage = lazy(() => import('../pages/LoginPage'));
+const SignUpPage = lazy(() => import('../pages/SignUpPage'));
+const FormPage = lazy(() => import('../pages/FormPage'));
+const Giffs = lazy(() => import('../pages/Giffs'));
 
 // available for admins only
 const adminPages = [

@@ -8,7 +8,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 const HomePage = () => {
   const data = useAuthContext();
 
-  console.log(data);
+  // const res = null;
   return (
     <div>
       <h1>Home Page</h1>
@@ -18,6 +18,10 @@ const HomePage = () => {
       <button onClick={() => data.setRole(ROLES.ADMIN)}>be admin</button>
       <button onClick={() => data.setRole(ROLES.USER)}>be user</button>
       <button onClick={() => data.setRole(ROLES.GUEST)}>be guest</button>
+
+      {/* {res.map((item) => (
+        <>item</>
+      ))} */}
 
       <p>
         <Link to={PATHS.ABOUT}>learn more...</Link>
