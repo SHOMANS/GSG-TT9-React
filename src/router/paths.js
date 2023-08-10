@@ -10,6 +10,7 @@ export const PATHS = {
     VIEW: `/posts/:id`,
     CREATE: '/posts/create',
     EDIT: '/posts/:id/edit',
+    FORM: '/posts/form',
   },
   ADMIN: {
     ROOT: '/admin',

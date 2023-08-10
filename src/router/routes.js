@@ -8,6 +8,7 @@ import CreatePostPage from '../pages/CreatePostPage';
 import CountersPage from '../pages/CountersPage';
 import LoginPage from '../pages/LoginPage';
 import SignUpPage from '../pages/SignUpPage';
+import FormPage from '../pages/FormPage';
 
 import { H1 } from '../components/Typography';
 
@@ -48,6 +49,10 @@ const userPages = [
       {
         path: PATHS.POSTS.VIEW,
         element: <PostPage />,
+      },
+      {
+        path: PATHS.POSTS.FORM,
+        element: <FormPage />,
       },
       {
         path: PATHS.POSTS.EDIT,
