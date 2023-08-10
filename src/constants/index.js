@@ -3,3 +3,8 @@ export const ROLES = {
   USER: 'USER',
   GUEST: 'GUEST',
 };
+
+export const THEMES = {
+  LIGHT: 'light',
+  DARK: 'dark',
+};

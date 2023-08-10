@@ -1,31 +1,17 @@
-import axios from 'axios';
-import React, { useState } from 'react';
-import { AUTH_API } from '../../config/api';
+import { Fragment, useState } from 'react';
 import { useAuthContext } from '../../contexts/AuthContext';
-import { ROLES } from '../../constants';
+import { LOGIN_INPUTS } from '../../constants/auth';
 
 const LoginPage = () => {
-  const { setUser, setToken, setRole } = useAuthContext();
+  const { login, isLoading } = useAuthContext();
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
   });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const res = await axios.post(AUTH_API + 'auth/login', formData);
-      console.log(res);
-
-      setUser(res.data.data);
-      setToken(res.data.data.token);
-      setRole(ROLES.USER);
-
-      localStorage.setItem('token', res.data.data.token);
-      localStorage.setItem('role', ROLES.USER);
-    } catch (err) {
-      console.log(err);
-    }
+    login(formData);
   };
 
   const handleChangeInput = ({ target: { value, name } }) =>
@@ -33,25 +19,21 @@ const LoginPage = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor='username'>User Name</label>
-      <input
-        type='text'
-        id='username'
-        name='username'
-        onChange={handleChangeInput}
-        value={formData.username}
-      />
+      {LOGIN_INPUTS.map((input) => (
+        <Fragment key={input.id}>
+          <label htmlFor={input.id}>{input.label}</label>
+          <input
+            type={input.type}
+            id={input.id}
+            name={input.id}
+            onChange={handleChangeInput}
+            value={formData[input.id]}
+            required
+          />
+        </Fragment>
+      ))}
 
-      <label htmlFor='password'>Password</label>
-      <input
-        type='password'
-        id='password'
-        name='password'
-        onChange={handleChangeInput}
-        value={formData.password}
-      />
-
-      <button type='submit'>Login</button>
+      <button type='submit'>{isLoading ? 'loading...' : 'login'}</button>
     </form>
   );
 };

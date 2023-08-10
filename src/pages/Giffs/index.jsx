@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import Container from '../../components/Container';
 import { GIPHY_KEY, GIPHY_URL } from '../../config/api';

@@ -7,3 +7,13 @@
 body {
   height: 6000px;
 }
+
+.light {
+  background-color: #fff;
+  color: #000;
+}
+
+.dark {
+  background-color: #000;
+  color: #fff;
+}
