@@ -122,7 +122,7 @@ const routes = [
   ...adminPages,
   {
     path: PATHS.GIFF_SEARCH,
-    element: <Giffs />,
+    element: <Giffs test={'false'} test2={true} />,
   },
   {
     path: PATHS.ERRORS.NOT_FOUND,

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import Container from '../../components/Container';
 import { GIPHY_KEY, GIPHY_URL } from '../../config/api';
 import useAPI from '../../hooks/useAPI';
+import HOCLayout from '../../HOC/Layout';
 
-const Giffs = () => {
+const Giffs = (props) => {
+  console.log(props);
   const [search, setSearch] = useState('');
 
   const { data, isLoading, get } = useAPI(`${GIPHY_URL}gifs/search`);
@@ -76,4 +78,4 @@ const Giffs = () => {
   );
 };
 
-export default Giffs;
+export default HOCLayout(Giffs);
